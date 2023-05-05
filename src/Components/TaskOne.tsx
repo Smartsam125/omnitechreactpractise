@@ -6,7 +6,7 @@ import "./styles.css"
 //import  './formatnumberwithshillings'
 
 interface Deposit {
-  userId: number;
+  depositId: number;
   memberName: string;
   title: string;
   amount: number;
@@ -29,13 +29,13 @@ const TaskOne: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      //const response = await fetch("https://134.209.230.15:8780/api/v1/deposits");
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const response = await fetch("http://24.199.116.8:8780/api/v1/deposits");
+      //const response = await fetch("https://jsonplaceholder.typicode.com/posts");
       const data = await response.json();
-      JSON.stringify(data.id);
+      //JSON.stringify(data);
       console.log(data);
       
-      setDeposits(data);
+       setDeposits(data.deposits);
     } catch (error) {
       //console.log(error.message);
       
@@ -67,18 +67,18 @@ const TaskOne: React.FC = () => {
       </thead>
       <tbody>
         {deposits.map((deposit) => (
-          <tr key={deposit.userId}>
+          <tr key={deposit.depositId}>
             <td>
               <input type="checkbox" />
             </td>
-            <td>{deposit.userId}</td>
-            <td>{deposit.title}</td>
+            <td>{deposit.depositId}</td>
+            <td>{deposit.memberName}</td>
             <td style={{ color: "rgb(32, 153, 32)" }}>
-              {/* {formatNumberWithShillings(deposit.amount)} */}
+              {formatNumberWithShillings(deposit.amount)}
             </td>
-            <td>{deposit.title}</td>
-            <td>{deposit.title}</td>
-            <td>{deposit.title}</td>
+            <td>{deposit.amount}</td>
+            <td>{deposit.transactionType}</td>
+            <td>{deposit.bankName}</td>
             <td>
               <button className="button button1" >
                  <i className="fa fa-check"></i> Approve 
@@ -87,9 +87,10 @@ const TaskOne: React.FC = () => {
                 <i className="fa fa-ban"></i> Reject
               </button>
             </td>
-            <td>{deposit.title}</td>
-            <td>{deposit.title}</td>
-            {/* <td>{deposit.title == null ? "Not yet" : deposit.}</td> */}
+            <td>{deposit.remarks}</td>
+            <td>{deposit.createdAt}</td>
+            
+           <td>{deposit.updatedAt == null ? "Not yet" : deposit.updatedAt}</td>
           </tr>
         ))}
       </tbody>
